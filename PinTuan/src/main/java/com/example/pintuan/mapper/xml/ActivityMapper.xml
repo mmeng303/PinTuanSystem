@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.pintuan.mapper.ActivityMapper">
+    <select id="selectByTeamId" resultType="com.example.pintuan.entity.Activity" parameterType="com.example.pintuan.VO.ActivityVO" >
+        select a.* from activity  a , team_member t where a.team_id=t.team_id and t.is_join=1 and user_id=#{userId}
+        <if test="activityName!='' and activityName!=null">
+            and  activity_name like concat('%',#{activityName},'%')
+        </if>
+        order by id desc limit #{page},#{limit}
+    </select>
+    <select id="selectByActivityCount" resultType="long" parameterType="com.example.pintuan.VO.ActivityVO">
+        select count(1) from activity  a , team_member t   where a.team_id=t.team_id and t.is_join=1 and user_id=#{userId}
+        <if test="activityName!='' and activityName!=null">
+            and  activity_name like concat('%',#{activityName},'%')
+        </if>
+        order by id desc
+    </select>
+    <update id="updateActivityId" parameterType="com.example.pintuan.VO.ActivityVO">
+        update activity set team_id=#{teamId} and activity_name=#{activityName} and starting_point=#{startingPoint} and
+                                    main_content=#{mainContent}  where id=#{id};
+    </update>
+</mapper>

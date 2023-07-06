@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.pintuan.mapper.TeamMapper">
+
+    <select id="selectOfNoJoin" parameterType="com.example.pintuan.VO.InviteVO" resultType="com.example.pintuan.entity.Team">
+        select t.* from team t,team_member m where t.id=m.team_id and m.user_id=#{userId} and m.is_join=#{isJoin}
+        order by t.id desc limit #{page},#{limit};
+    </select>
+    <select id="selectOfNoJoinCount" parameterType="com.example.pintuan.VO.InviteVO" resultType="long">
+        select count(1) from team t,team_member m where t.id=m.team_id and m.user_id=#{userId} and m.is_join=#{isJoin}
+        order by t.id desc
+    </select>
+</mapper>
